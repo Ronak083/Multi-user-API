@@ -24,16 +24,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConnfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserService userService;
+    private final JwtAuthenticationEntryPoint entryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/auth/**")
                         .permitAll()
-                        .requestMatchers("/api/admin").hasAuthority(Role.ADMIN.name())
-                        .requestMatchers("/api/user").hasAuthority(Role.USER.name())
-                        .requestMatchers("/api/editor").hasAuthority(Role.EDITOR.name())
+                        .requestMatchers("/api/admin/**").hasAuthority(Role.ADMIN.name())
+                        .requestMatchers("/api/user/**").hasAuthority(Role.USER.name())
                         .anyRequest().authenticated())
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(entryPoint))
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class
@@ -58,6 +59,5 @@ public class SecurityConnfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration congif) throws Exception{
         return congif.getAuthenticationManager();
     }
-
 
 }
