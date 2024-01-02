@@ -22,7 +22,7 @@ public class AdminController {
         return ResponseEntity.ok("Hey Admin");
     }
 
-    @GetMapping("/show")
+    @GetMapping("/getall")
     public ResponseEntity<List<User>> users(){
         return ResponseEntity.ok(userService.getAllUsers());
     }

@@ -6,5 +6,5 @@ import lombok.Data;
 public class JwtAuthenticationResponse {
     private String username;
     private String token;
-    private String refreshYoken;
+
 }
