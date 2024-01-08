@@ -7,18 +7,21 @@ import com.example.groupapi.entity.User;
 import com.example.groupapi.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
+
+    @GetMapping("/forall")
+    public ResponseEntity<String> sayHello(){
+        return ResponseEntity.ok("Hey public");
+    }
+
     @PostMapping("/signup")
     public ResponseEntity<User> signup (@RequestBody SignUpRequest signUpRequest){
         return ResponseEntity.ok(authenticationService.signup(signUpRequest));
