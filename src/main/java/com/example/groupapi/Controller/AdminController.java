@@ -1,6 +1,5 @@
 package com.example.groupapi.Controller;
 
-import com.example.groupapi.Dao.SignUpRequest;
 import com.example.groupapi.entity.User;
 import com.example.groupapi.service.UserService;
 import lombok.RequiredArgsConstructor;
